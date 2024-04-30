@@ -1,12 +1,13 @@
 const express = require('express');
-const mongoose = require('mongoose');
 const userRoutes = require('./routes/users');
 
-const PORT = process.env.PORT || 8000;
+require('./db');
 
 const app = express();
+const PORT = process.env.PORT || 8000;
+
 app.use(express.json());
-app.use()
+app.use('/users', userRoutes);
 
 app.get('/', (req, res) => {
   res.send("App Server is Running");

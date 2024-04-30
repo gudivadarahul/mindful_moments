@@ -11,7 +11,7 @@ router.post('/signup', async (req, res) => {
     const newUser = new User({
       username: req.body.username,
       email: req.body.email,
-      password: req.body.password
+      password: hashedPassword
     });
     await newUser.save();
     res.status(201).send('User Created');
@@ -22,12 +22,15 @@ router.post('/signup', async (req, res) => {
 
 // Login Route
 router.post('/login', async (req, res) => {
-  const user = await User.findOne({ username: req.body.username });
-  if (user && await bcrypt.compare(req.body.password, user.password)) {
-    res.send('Login Successful')
-  }
-  else {
-    res.status(400).send('Invalid Credentials')
+  try {
+    const user = await User.findOne({ username: req.body.username });
+    if (user && await bcrypt.compare(req.body.password, user.password)) {
+      res.send('Login Successful');
+    } else {
+      res.status(400).send('Invalid Credentials');
+    }
+  } catch (error) {
+    res.status(500).send('Error during login: ' + error.message);
   }
 });
 

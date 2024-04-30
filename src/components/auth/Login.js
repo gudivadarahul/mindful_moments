@@ -3,9 +3,16 @@ import React, { useState } from 'react';
 function Login() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [error, setError] = useState('');  // State to store the error message
+
+  const handleInputChange = (setter) => (event) => {
+    setter(event.target.value);
+    if (error) setError('');  // Clear the error when the user starts typing
+  };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    setError('');  // Clear previous errors
     const response = await fetch('/users/login', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -13,20 +20,21 @@ function Login() {
     });
     if (response.ok) {
       console.log('Login successful');
-      // Handle successful login, e.g., storing access token, redirecting
+      // Handle successful login here, possibly redirecting the user or storing auth tokens
     } else {
       const errorText = await response.text();
+      setError(errorText);  // Set the error message to display to the user
       console.error('Login failed:', errorText);
-      // Handle errors
     }
   };
 
   return (
     <form onSubmit={handleSubmit}>
       <h2>Log In</h2>
-      <input type="text" placeholder="Username" value={username} onChange={e => setUsername(e.target.value)} required />
-      <input type="password" placeholder="Password" value={password} onChange={e => setPassword(e.target.value)} required />
+      <input type="text" placeholder="Username" value={username} onChange={handleInputChange(setUsername)} required />
+      <input type="password" placeholder="Password" value={password} onChange={handleInputChange(setPassword)} required />
       <button type="submit">Log In</button>
+      {error && <div style={{ color: 'red', marginTop: '10px' }}>{error}</div>}
     </form>
   );
 }
