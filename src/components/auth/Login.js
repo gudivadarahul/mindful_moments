@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router';
 
 function Login() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');  // State to store the error message
+  const navigate = useNavigate();
 
   const handleInputChange = (setter) => (event) => {
     setter(event.target.value);
@@ -20,7 +22,9 @@ function Login() {
     });
     if (response.ok) {
       console.log('Login successful');
-      // Handle successful login here, possibly redirecting the user or storing auth tokens
+      const data = await response.text();
+      console.log(data);
+      navigate('/user-page');
     } else {
       const errorText = await response.text();
       setError(errorText);  // Set the error message to display to the user

@@ -1,9 +1,11 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router";
 
 function Signup() {
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const navigate = useNavigate();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -14,7 +16,7 @@ function Signup() {
     });
     if (response.ok) {
       console.log('Signup successful');
-      // Redirect to login or another page
+      navigate('/user-page');
     } else {
       const errorText = await response.text();
       console.error('Signup failed:', errorText);
