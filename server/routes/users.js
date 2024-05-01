@@ -63,6 +63,50 @@ router.get('/user-page', async (req, res) => {
   }
 });
 
+// Update password
+router.post('/update-password', async (req, res) => {
+  if (!req.session.userId) {
+    return res.status(401).send('Unauthorized');
+  }
+  try {
+    const user = await User.findById(req.session.userId);
+    if (!user) {
+      return res.status(404).send('User not found');
+    }
+    const { newPassword } = req.body;
+    if (!newPassword) {
+      return res.status(400).send('No new password provided');
+    }
+    user.password = await bcrypt.hash(newPassword, 10);
+    await user.save();
+    res.send('Password updated successfully');
+  } catch (error) {
+    res.status(500).send('Failed to update password');
+  }
+});
+
+// Update email route
+router.post('/update-email', async (req, res) => {
+  if (!req.session.userId) {
+    return res.status(401).send('Unauthorized');
+  }
+  try {
+    const user = await User.findById(req.session.userId);
+    if (!user) {
+      return res.status(404).send('User not found');
+    }
+    const { newEmail } = req.body;
+    if (!newEmail) {
+      return res.status(400).send('No new email provided');
+    }
+    user.email = newEmail;
+    await user.save();
+    res.send('Email updated successfully');
+  } catch (error) {
+    res.status(500).send('Error updating email: ' + error.message);
+  }
+});
+
 
 
 module.exports = router;

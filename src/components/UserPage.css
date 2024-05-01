@@ -1,0 +1,50 @@
+.user-page-container {
+  margin: 20px auto;
+  padding: 20px;
+  max-width: 500px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.logout-button,
+.change-password-button,
+.change-email-button,
+.submit-button {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  margin-top: 10px;
+  background-color: #007BFF;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.logout-button:hover,
+.change-password-button:hover,
+.change-email-button:hover,
+.submit-button:hover {
+  background-color: #0056b3;
+}
+
+.form-container {
+  margin-top: 20px;
+  background-color: white;
+  padding: 15px;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.form-label {
+  margin-bottom: 10px;
+  display: block;
+}
+
+.input-field {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
