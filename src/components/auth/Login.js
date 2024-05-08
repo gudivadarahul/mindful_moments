@@ -4,24 +4,23 @@ import { useNavigate } from 'react-router';
 function Login() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [error, setError] = useState('');  // State to store the error message
+  const [error, setError] = useState('');  
   const navigate = useNavigate();
 
   const handleInputChange = (setter) => (event) => {
     setter(event.target.value);
-    if (error) setError('');  // Clear the error when the user starts typing
+    if (error) setError('');  
   };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    setError('');  // Clear previous errors
+    setError(''); 
     const response = await fetch('/users/login', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ username, password })
     });
     if (response.ok) {
-      console.log('Login successful');
       const data = await response.text();
       console.log(data);
       navigate('/user-page');

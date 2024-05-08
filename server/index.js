@@ -1,5 +1,6 @@
 const express = require('express');
 const userRoutes = require('./routes/users');
+const weeklyGoalsRoutes = require('./routes/weeklyGoals')
 const session = require('express-session');
 
 require('./db');
@@ -19,6 +20,7 @@ app.use(session({
 
 
 app.use('/users', userRoutes);
+app.use('/api/weekly-goals', weeklyGoalsRoutes);
 
 app.get('/', (req, res) => {
   res.send("App Server is Running");

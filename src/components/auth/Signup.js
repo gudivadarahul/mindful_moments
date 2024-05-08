@@ -20,7 +20,6 @@ function Signup() {
     } else {
       const errorText = await response.text();
       console.error('Signup failed:', errorText);
-      // Handle errors
     }
   };
 
