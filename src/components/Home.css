@@ -1,0 +1,25 @@
+.home-container {
+  text-align: center;
+  padding: 50px;
+}
+
+.home-container h1 {
+  color: #333;
+}
+
+.navigation-links {
+  margin-top: 20px;
+}
+
+.login-link, .signup-link {
+  margin-right: 10px;
+  text-decoration: none;
+  color: #fff;
+  background-color: #007bff;
+  padding: 10px 15px;
+  border-radius: 5px;
+}
+
+.login-link:hover, .signup-link:hover {
+  background-color: #0056b3;
+}
