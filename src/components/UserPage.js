@@ -13,7 +13,25 @@ function UserPage() {
   const [unsavedChanges, setUnsavedChanges] = useState(false);
   const navigate = useNavigate();
 
-  const fetchUserPage = useCallback(async () => {
+  useEffect(() => {
+    const checkSession = async () => {
+      try {
+        const response = await fetch("/users/check-session", { credentials: "include" });
+        const data = await response.json();
+        if (!data.isLoggedIn) {
+          navigate("/login");
+        } else {
+          fetchUserPage();
+          fetchWeeklyGoals();
+        }
+      } catch (error) {
+        console.error("Session check failed:", error);
+      }
+    };
+    checkSession();
+  }, [navigate]);
+
+  const fetchUserPage = async () => {
     try {
       const response = await fetch("/users/user-page");
       if (!response.ok) throw new Error("Failed to fetch user data");
@@ -23,48 +41,35 @@ function UserPage() {
       console.error("Fetching user data failed:", error);
       navigate("/login");
     }
-  }, [navigate]);
+  };
 
-  const fetchWeeklyGoals = useCallback(async () => {
+  const fetchWeeklyGoals = async () => {
     try {
-      const response = await fetch(`/api/weekly-goals`, {
-        credentials: "include",
-      });
+      const response = await fetch(`/api/weekly-goals`, { credentials: "include" });
       if (!response.ok) throw new Error("Failed to fetch goals");
       const data = await response.json();
-      setWeeklyGoals(data.goals.map((goal) => ({ ...goal, id: nanoid() })));
+      const goalsWithIds = data.goals ? data.goals.map(goal => ({ ...goal, id: nanoid() })) : [];
+      setWeeklyGoals(goalsWithIds);
     } catch (error) {
       console.error("Error fetching weekly goals:", error);
     }
-  }, []);
+  };
 
-  const checkSession = useCallback(async () => {
-    try {
-      const response = await fetch("/users/check-session", {
-        credentials: "include",
-      });
-      const data = await response.json();
-      if (!data.isLoggedIn) navigate("/login");
-      else {
-        fetchUserPage();
-        fetchWeeklyGoals();
-      }
-    } catch (error) {
-      console.error("Session check failed:", error);
-    }
-  }, [navigate, fetchUserPage, fetchWeeklyGoals]);
+  const updateGoalText = (id, text) => {
+    setWeeklyGoals(prevGoals =>
+      prevGoals.map(goal => (goal.id === id ? { ...goal, text: text } : goal))
+    );
+    setUnsavedChanges(true);
+  };
 
-  useEffect(() => {
-    checkSession();
-    const handleBeforeUnload = (event) => {
-      if (unsavedChanges) {
-        event.preventDefault();
-        event.returnValue = "";
-      }
-    };
-    window.addEventListener("beforeunload", handleBeforeUnload);
-    return () => window.removeEventListener("beforeunload", handleBeforeUnload);
-  }, [checkSession, unsavedChanges]);
+  const toggleGoalCompletion = (id) => {
+    setWeeklyGoals((prevGoals) =>
+      prevGoals.map((goal) =>
+        goal.id === id ? { ...goal, completed: !goal.completed } : goal
+      )
+    );
+    setUnsavedChanges(true);
+  };
 
   const handleLogout = async () => {
     if (unsavedChanges) {
@@ -120,22 +125,6 @@ function UserPage() {
     } catch (error) {
       alert(error.message);
     }
-  };
-
-  const updateGoalText = (id, text) => {
-    setWeeklyGoals((prevGoals) =>
-      prevGoals.map((goal) => goal.id === id ? { ...goal, text: text } : goal)
-    );
-    setUnsavedChanges(true);
-  };
-
-  const toggleGoalCompletion = (id) => {
-    setWeeklyGoals((prevGoals) =>
-      prevGoals.map((goal) =>
-        goal.id === id ? { ...goal, completed: !goal.completed } : goal
-      )
-    );
-    setUnsavedChanges(true);
   };
 
   return (
