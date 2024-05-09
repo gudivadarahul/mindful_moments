@@ -48,3 +48,32 @@
   border: 1px solid #ccc;
   border-radius: 4px;
 }
+
+.goals-container {
+  margin-top: 20px;
+  padding: 20px;
+  background-color: #f4f4f9;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.goal-item {
+  font-size: 16px;
+  padding: 8px;
+  border-bottom: 1px solid #ddd;
+}
+
+.goal-item.completed input[type="text"] {
+  text-decoration: line-through;
+  color: grey;
+}
+
+.goal-input {
+  margin-left: 8px;
+  border: none;
+  border-bottom: 1px solid black;
+}
+
+ol {
+  padding-left: 20px;
+}

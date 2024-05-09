@@ -1,71 +1,180 @@
-import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import './UserPage.css';
+import React, { useState, useEffect, useCallback } from "react";
+import { useNavigate } from "react-router-dom";
+import "./UserPage.css";
+import { nanoid } from "nanoid";
 
 function UserPage() {
-  const [username, setUsername] = useState('');
-  const [newPassword, setNewPassword] = useState('');
-  const [newEmail, setNewEmail] = useState('');
+  const [username, setUsername] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [newEmail, setNewEmail] = useState("");
   const [showPasswordForm, setShowPasswordForm] = useState(false);
   const [showEmailForm, setShowEmailForm] = useState(false);
+  const [weeklyGoals, setWeeklyGoals] = useState([]);
+  const [unsavedChanges, setUnsavedChanges] = useState(false);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    fetch('/users/user-page').then(response => {
-      if (response.ok) return response.text();
-      throw new Error('Network response was not ok.');
-    }).then(data => setUsername(data)).catch(() => navigate('/'));
+  const fetchUserPage = useCallback(async () => {
+    try {
+      const response = await fetch("/users/user-page");
+      if (!response.ok) throw new Error("Failed to fetch user data");
+      const data = await response.text();
+      setUsername(data);
+    } catch (error) {
+      console.error("Fetching user data failed:", error);
+      navigate("/login");
+    }
   }, [navigate]);
+
+  const fetchWeeklyGoals = useCallback(async () => {
+    try {
+      const response = await fetch(`/api/weekly-goals`, {
+        credentials: "include",
+      });
+      if (!response.ok) throw new Error("Failed to fetch goals");
+      const data = await response.json();
+      setWeeklyGoals(data.goals.map((goal) => ({ ...goal, id: nanoid() })));
+    } catch (error) {
+      console.error("Error fetching weekly goals:", error);
+    }
+  }, []);
+
+  const checkSession = useCallback(async () => {
+    try {
+      const response = await fetch("/users/check-session", {
+        credentials: "include",
+      });
+      const data = await response.json();
+      if (!data.isLoggedIn) navigate("/login");
+      else {
+        fetchUserPage();
+        fetchWeeklyGoals();
+      }
+    } catch (error) {
+      console.error("Session check failed:", error);
+    }
+  }, [navigate, fetchUserPage, fetchWeeklyGoals]);
+
+  useEffect(() => {
+    checkSession();
+    const handleBeforeUnload = (event) => {
+      if (unsavedChanges) {
+        event.preventDefault();
+        event.returnValue = "";
+      }
+    };
+    window.addEventListener("beforeunload", handleBeforeUnload);
+    return () => window.removeEventListener("beforeunload", handleBeforeUnload);
+  }, [checkSession, unsavedChanges]);
+
+  const handleLogout = async () => {
+    if (unsavedChanges) {
+      try {
+        const response = await fetch("/api/weekly-goals", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ goals: weeklyGoals }),
+          credentials: "include",
+        });
+        if (!response.ok) throw new Error("Failed to save goals");
+      } catch (error) {
+        console.error("Error saving goals:", error);
+        // You can also show an error message to the user
+      }
+    }
+    try {
+      const response = await fetch("/users/logout");
+      if (!response.ok) throw new Error("Logout failed");
+      navigate("/");
+    } catch (error) {
+      alert(error.message);
+    }
+  };
 
   const handleUpdatePassword = async (e) => {
     e.preventDefault();
-    const response = await fetch('/users/update-password', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ newPassword })
-    });
-    if (response.ok) {
-      alert('Password updated successfully');
-      setShowPasswordForm(false); // Hide the form after update
-    } else {
-      alert('Failed to update password');
+    try {
+      const response = await fetch("/users/update-password", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ newPassword }),
+      });
+      if (!response.ok) throw new Error("Failed to update password");
+      alert("Password updated successfully");
+      setShowPasswordForm(false);
+    } catch (error) {
+      alert(error.message);
     }
   };
 
   const handleUpdateEmail = async (e) => {
     e.preventDefault();
-    const response = await fetch('/users/update-email', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ newEmail })
-    });
-    if (response.ok) {
-      alert('Email updated successfully');
-      setShowEmailForm(false); // Hide the form after update
-    } else {
-      alert('Failed to update email');
+    try {
+      const response = await fetch("/users/update-email", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ newEmail }),
+      });
+      if (!response.ok) throw new Error("Failed to update email");
+      alert("Email updated successfully");
+      setShowEmailForm(false);
+    } catch (error) {
+      alert(error.message);
     }
   };
 
-  const handleLogout = async () => {
-    const response = await fetch('/users/logout');
-    if (response.ok) {
-      navigate('/');
-    } else {
-      alert('Logout failed');
-    }
+  const updateGoalText = (id, text) => {
+    setWeeklyGoals((prevGoals) =>
+      prevGoals.map((goal) => goal.id === id ? { ...goal, text: text } : goal)
+    );
+    setUnsavedChanges(true);
+  };
+
+  const toggleGoalCompletion = (id) => {
+    setWeeklyGoals((prevGoals) =>
+      prevGoals.map((goal) =>
+        goal.id === id ? { ...goal, completed: !goal.completed } : goal
+      )
+    );
+    setUnsavedChanges(true);
   };
 
   return (
     <div className="user-page-container">
       <h1>Welcome {username}</h1>
+      <div className="goals-container">
+        <h2>Your Weekly Goals</h2>
+        {weeklyGoals.length > 0 ? (
+          <ol>
+            {weeklyGoals.map((goal) => (
+              <li key={goal.id} className={`goal-item ${goal.completed ? "completed" : ""}`}>
+                <input
+                  type="checkbox"
+                  checked={goal.completed}
+                  onChange={() => toggleGoalCompletion(goal.id)}
+                  id={`goal-${goal.id}-checkbox`}
+                />
+                <input
+                  type="text"
+                  value={goal.text}
+                  onChange={(e) => updateGoalText(goal.id, e.target.value)}
+                  className="goal-input"
+                  id={`goal-${goal.id}`}
+                  name="goal-text"
+                />
+              </li>
+            ))}
+          </ol>
+        ) : (
+          <p>No goals to display.</p>
+        )}
+      </div>
       <button onClick={handleLogout} className="logout-button">Log Out</button>
       <button onClick={() => setShowPasswordForm(!showPasswordForm)} className="change-password-button">Change Password</button>
       {showPasswordForm && (
         <form onSubmit={handleUpdatePassword} className="form-container">
           <label className="form-label">
             New Password:
-            <input type="password" value={newPassword} onChange={e => setNewPassword(e.target.value)} className="input-field" />
+            <input type="password" value={newPassword} onChange={(e) => setNewPassword(e.target.value)} className="input-field" />
           </label>
           <button type="submit" className="submit-button">Update Password</button>
         </form>
@@ -75,14 +184,13 @@ function UserPage() {
         <form onSubmit={handleUpdateEmail} className="form-container">
           <label className="form-label">
             New Email:
-            <input type="email" value={newEmail} onChange={e => setNewEmail(e.target.value)} className="input-field" />
+            <input type="email" value={newEmail} onChange={(e) => setNewEmail(e.target.value)} className="input-field" />
           </label>
           <button type="submit" className="submit-button">Update Email</button>
         </form>
       )}
     </div>
   );
-
 }
 
 export default UserPage;

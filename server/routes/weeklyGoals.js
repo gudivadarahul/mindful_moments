@@ -10,52 +10,39 @@ function checkAuthenticated(req, res, next) {
   next();
 }
 
-// Get weekly goals for a specific week using session UserId
 router.get('/', checkAuthenticated, async (req, res) => {
-  const { weekStartDate } = req.query;
   try {
-    const goals = await WeeklyGoals.findOne({
-      userId: req.session.userId,
-      weekStartDate: new Date(weekStartDate)
-    });
-    if (!goals) {
-      return res.status(404).send('No goals found for this week.');
-    }
-    res.json(goals);
+    const goals = await WeeklyGoals.findOne({ userId: req.session.userId });
+    console.log("Fetched goals:", goals);
+    res.json(goals || { goals: [] }); // Send an empty array if no goals found
   } catch (error) {
-    res.status(500).send('Server Error: ' + error.message );
+    console.error("Error fetching weekly goals:", error);
+    res.status(500).send('Server Error');
   }
 });
 
 // POST route to create or update weekly goals
 router.post('/', checkAuthenticated, async (req, res) => {
-  const { weekStartDate, goals } = req.body;
+  const { goals } = req.body; 
+  console.log("Received request body:", req.body);
+  console.log("Session userId:", req.session.userId);
+  if (!goals) {
+    console.log("Missing data: goals are required.");
+    return res.status(400).send('Goals are required.');
+  }
+
   try {
-      let weeklyGoals = await WeeklyGoals.findOneAndUpdate(
-          { userId: req.session.userId, weekStartDate: new Date(weekStartDate) },
-          { $set: { goals: goals } },
+      let updatedGoals = await WeeklyGoals.findOneAndUpdate(
+          { userId: req.session.userId },
+          { $set: { goals } },
           { new: true, upsert: true }
       );
-      res.json(weeklyGoals);
-  } catch (error) {
-      res.status(500).send('Server error: ' + error.message);
-  }
-});
 
-// Delete weekly goals
-router.delete('/', checkAuthenticated, async (req, res) => {
-  const { weekStartDate } = req.query;
-  try {
-      const result = await WeeklyGoals.findOneAndDelete({
-          userId: req.session.userId,
-          weekStartDate: new Date(weekStartDate)
-      });
-      if (!result) {
-          return res.status(404).json({ message: 'No goals found to delete.' });
-      }
-      res.json({ message: 'Goals deleted successfully' });
+      console.log("Updated goals:", updatedGoals);
+      res.json(updatedGoals);
   } catch (error) {
-      res.status(500).json({ message: 'Server error: ' + error.message });
+    console.error("Error updating/creating weekly goals:", error);
+    res.status(500).send('Server error');
   }
 });
 

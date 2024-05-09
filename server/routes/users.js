@@ -107,6 +107,14 @@ router.post('/update-email', async (req, res) => {
   }
 });
 
+// check user session
+router.get('/check-session', (req, res) => {
+  if (req.session.userId) {
+    res.json({ isLoggedIn: true, userId: req.session.userId });
+  } else {
+    res.json({ isLoggedIn: false });
+  }
+});
 
 
 module.exports = router;
