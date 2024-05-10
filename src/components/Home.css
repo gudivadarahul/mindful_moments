@@ -1,25 +1,129 @@
-.home-container {
-  text-align: center;
-  padding: 50px;
+* {
+  box-sizing: border-box; /* Ensures padding and borders are included in total width and height */
+  margin: 0;
+  padding: 0;
 }
 
-.home-container h1 {
+
+html, body {
+  height: 100%; 
+  font-family: 'Merriweather', serif;
   color: #333;
+  background-color: #f4f4f9;
 }
 
-.navigation-links {
+body {
+  font-family: 'Merriweather', serif; /* Changed from Arial to Merriweather for a more polished look */
+  color: #333;
+  background-color: #f4f4f9; /* Soft blue background for a soothing feel */
+  margin: 0;
+  padding: 0;
+}
+
+.home-container {
+  display: flex;
+  flex-direction: column; /* Stack children vertically */
+  min-height: 100vh; /* Minimum height is full viewport height */
+}
+
+.main-content {
+  flex-grow: 1; /* Allows this element to expand and fill available space */
+}
+
+/* Navigation styles */
+.home-nav {
+  background-color: #fff;
+  padding: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.home-nav h1 {
+  font-family: 'Roboto', sans-serif; /* Adding Roboto for headers */
+  color: #5C7AEA; /* Soft blue */
+}
+
+.nav-link, .signup {
+  text-decoration: none;
+  color: #5C7AEA; /* Matching link colors with the header */
+  margin-left: 10px;
+}
+
+.signup {
+  padding: 10px 20px;
+  background-color: #5C7AEA; /* Soft blue for signup button */
+  color: #fff;
+  border-radius: 20px;
+}
+
+/* Header styles - no image, updated background */
+.home-header {
+  text-align: center;
+  padding: 20px 20px;
+  background-color: #EAEFF7; /* Lighter shade of blue, removed gradient */
+  color: #333; /* For better readability */
+}
+
+.header-content h2 {
+  font-family: 'Roboto', sans-serif;
+  margin-bottom: 16px;
+  color: #4A61D1; /* Deeper blue */
+}
+
+.header-content p {
+  font-family: 'Merriweather', serif;
+  margin-bottom: 25px;
+  color: #626262; /* Soft gray */
+}
+
+.signup-button {
+  font-family: 'Roboto', sans-serif;
+  padding: 10px 25px;
+  background-color: #4A61D1;
+  color: #fff;
+  border-radius: 20px;
+  text-decoration: none;
   margin-top: 20px;
 }
 
-.login-link, .signup-link {
-  margin-right: 10px;
-  text-decoration: none;
-  color: #fff;
-  background-color: #007bff;
-  padding: 10px 15px;
-  border-radius: 5px;
+/* Features styles */
+.features {
+  display: flex;
+  justify-content: space-around;
+  padding: 20px;
 }
 
-.login-link:hover, .signup-link:hover {
-  background-color: #0056b3;
+.feature h3 {
+  font-family: 'Roboto', sans-serif;
+  color: #4A61D1;
+}
+
+.feature p {
+  font-family: 'Merriweather', serif;
+  color: #626262;
+}
+
+.feature img {
+  width: 100px; /* Ensuring image size consistency */
+  height: auto;
+}
+
+.features .feature {
+  flex: 1;
+  padding: 1rem;
+  margin: 0 1rem;
+  background: #fff;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  border-radius: 10px;
+}
+
+/* Footer styles */
+.home-footer {
+  text-align: center;
+  padding: 1rem;
+  background-color: #fff;
+  color: #4A61D1; /* Soft blue for a consistent theme */
+  box-shadow: 0 -2px 4px rgba(0,0,0,0.1);
 }
