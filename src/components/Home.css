@@ -1,33 +1,26 @@
 * {
-  box-sizing: border-box; /* Ensures padding and borders are included in total width and height */
+  box-sizing: border-box; 
   margin: 0;
   padding: 0;
 }
 
-
-html, body {
+body {
   height: 100%; 
-  font-family: 'Merriweather', serif;
   color: #333;
   background-color: #f4f4f9;
-}
-
-body {
-  font-family: 'Merriweather', serif; /* Changed from Arial to Merriweather for a more polished look */
-  color: #333;
-  background-color: #f4f4f9; /* Soft blue background for a soothing feel */
+  font-family: 'Merriweather', serif; 
   margin: 0;
   padding: 0;
 }
 
 .home-container {
   display: flex;
-  flex-direction: column; /* Stack children vertically */
-  min-height: 100vh; /* Minimum height is full viewport height */
+  flex-direction: column; 
+  min-height: 100vh; 
 }
 
 .main-content {
-  flex-grow: 1; /* Allows this element to expand and fill available space */
+  flex-grow: 1; 
 }
 
 /* Navigation styles */
@@ -41,51 +34,47 @@ body {
 }
 
 .home-nav h1 {
-  font-family: 'Roboto', sans-serif; /* Adding Roboto for headers */
-  color: #5C7AEA; /* Soft blue */
+  font-family: 'Roboto', sans-serif; 
+  color: #5C7AEA; 
 }
 
-.nav-link, .signup {
+.nav-link, .signup-button {
   text-decoration: none;
-  color: #5C7AEA; /* Matching link colors with the header */
-  margin-left: 10px;
-}
-
-.signup {
+  color: #fff; 
+  background-color: #4A61D1; 
   padding: 10px 20px;
-  background-color: #5C7AEA; /* Soft blue for signup button */
-  color: #fff;
-  border-radius: 20px;
+  border-radius: 5px;
+  display: inline-block;
+  transition: all 0.3s ease;
+  margin-left: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
 }
 
-/* Header styles - no image, updated background */
+.nav-link:hover, .nav-link:focus,
+.signup-button:hover, .signup-button:focus {
+  color: #fff; 
+  background-color: #3651B6;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15); 
+  outline: none; 
+}
+
 .home-header {
   text-align: center;
   padding: 20px 20px;
-  background-color: #EAEFF7; /* Lighter shade of blue, removed gradient */
-  color: #333; /* For better readability */
+  background-color: #EAEFF7; 
+  color: #333; 
 }
 
 .header-content h2 {
   font-family: 'Roboto', sans-serif;
   margin-bottom: 16px;
-  color: #4A61D1; /* Deeper blue */
+  color: #4A61D1; 
 }
 
 .header-content p {
   font-family: 'Merriweather', serif;
   margin-bottom: 25px;
-  color: #626262; /* Soft gray */
-}
-
-.signup-button {
-  font-family: 'Roboto', sans-serif;
-  padding: 10px 25px;
-  background-color: #4A61D1;
-  color: #fff;
-  border-radius: 20px;
-  text-decoration: none;
-  margin-top: 20px;
+  color: #626262; 
 }
 
 /* Features styles */
@@ -106,160 +95,7 @@ body {
 }
 
 .feature img {
-  width: 100px; /* Ensuring image size consistency */
-  height: auto;
-}
-
-.features .feature {
-  flex: 1;
-  padding: 1rem;
-  margin: 0 1rem;
-  background: #fff;
-  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-  border-radius: 10px;
-}
-
-.interaction-section {
-  display: flex;
-  justify-content: space-around;
-  padding: 20px;
-  background-color: #f4f4f9;
-}
-
-.feedback-form, .newsletter-signup {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between; 
-  padding: 20px;
-  margin: 10px;
-  background-color: #ffffff;
-  border-radius: 10px;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-  text-align: center;
-}
-
-.newsletter-signup h3, .newsletter-signup p {
-  margin-bottom: 15px;
-}
-
-.feedback-form h3, .feedback-form textarea {
-  margin-bottom: 15px;
-}
-
-.feedback-form form, .newsletter-signup form {
-  display: flex;
-  flex-direction: column;
-}
-* {
-  box-sizing: border-box; /* Ensures padding and borders are included in total width and height */
-  margin: 0;
-  padding: 0;
-}
-
-
-html, body {
-  height: 100%; 
-  font-family: 'Merriweather', serif;
-  color: #333;
-  background-color: #f4f4f9;
-}
-
-body {
-  font-family: 'Merriweather', serif; /* Changed from Arial to Merriweather for a more polished look */
-  color: #333;
-  background-color: #f4f4f9; /* Soft blue background for a soothing feel */
-  margin: 0;
-  padding: 0;
-}
-
-.home-container {
-  display: flex;
-  flex-direction: column; /* Stack children vertically */
-  min-height: 100vh; /* Minimum height is full viewport height */
-}
-
-.main-content {
-  flex-grow: 1; /* Allows this element to expand and fill available space */
-}
-
-/* Navigation styles */
-.home-nav {
-  background-color: #fff;
-  padding: 20px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-}
-
-.home-nav h1 {
-  font-family: 'Roboto', sans-serif; /* Adding Roboto for headers */
-  color: #5C7AEA; /* Soft blue */
-}
-
-.nav-link, .signup {
-  text-decoration: none;
-  color: #5C7AEA; /* Matching link colors with the header */
-  margin-left: 10px;
-}
-
-.signup {
-  padding: 10px 20px;
-  background-color: #5C7AEA; /* Soft blue for signup button */
-  color: #fff;
-  border-radius: 20px;
-}
-
-/* Header styles - no image, updated background */
-.home-header {
-  text-align: center;
-  padding: 20px 20px;
-  background-color: #EAEFF7; /* Lighter shade of blue, removed gradient */
-  color: #333; /* For better readability */
-}
-
-.header-content h2 {
-  font-family: 'Roboto', sans-serif;
-  margin-bottom: 16px;
-  color: #4A61D1; /* Deeper blue */
-}
-
-.header-content p {
-  font-family: 'Merriweather', serif;
-  margin-bottom: 25px;
-  color: #626262; /* Soft gray */
-}
-
-.signup-button {
-  font-family: 'Roboto', sans-serif;
-  padding: 10px 25px;
-  background-color: #4A61D1;
-  color: #fff;
-  border-radius: 20px;
-  text-decoration: none;
-  margin-top: 20px;
-}
-
-/* Features styles */
-.features {
-  display: flex;
-  justify-content: space-around;
-  padding: 20px;
-}
-
-.feature h3 {
-  font-family: 'Roboto', sans-serif;
-  color: #4A61D1;
-}
-
-.feature p {
-  font-family: 'Merriweather', serif;
-  color: #626262;
-}
-
-.feature img {
-  width: 100px; /* Ensuring image size consistency */
+  width: 100px; 
   height: auto;
 }
 
@@ -313,6 +149,7 @@ textarea, input[type="email"] {
 }
 
 button {
+  font-family: 'Merriweather', serif;
   width: 100%;
   padding: 10px;
   border-radius: 5px;
@@ -320,11 +157,14 @@ button {
   color: white;
   border: none;
   cursor: pointer;
-  transition: background-color 0.3s;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-button:hover {
+button:hover, button:focus {
   background-color: #3651B6;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  outline: none;
 }
 
 /* Footer styles */
@@ -335,36 +175,3 @@ button:hover {
   color: #4A61D1; /* Soft blue for a consistent theme */
   box-shadow: 0 -2px 4px rgba(0,0,0,0.1);
 }
-
-
-textarea, input[type="email"] {
-  padding: 8px;
-  margin-bottom: 10px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-}
-
-button {
-  width: 100%;
-  padding: 10px;
-  border-radius: 5px;
-  background-color: #4A61D1;
-  color: white;
-  border: none;
-  cursor: pointer;
-  transition: background-color 0.3s;
-}
-
-button:hover {
-  background-color: #3651B6;
-}
-
-/* Footer styles */
-.home-footer {
-  text-align: center;
-  padding: 1rem;
-  background-color: #fff;
-  color: #4A61D1; /* Soft blue for a consistent theme */
-  box-shadow: 0 -2px 4px rgba(0,0,0,0.1);
-}
-
