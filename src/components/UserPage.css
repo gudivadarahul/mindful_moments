@@ -9,7 +9,6 @@
 
 .logout-button,
 .change-password-button,
-.change-email-button,
 .submit-button {
   display: block;
   width: 100%;
@@ -24,7 +23,6 @@
 
 .logout-button:hover,
 .change-password-button:hover,
-.change-email-button:hover,
 .submit-button:hover {
   background-color: #0056b3;
 }

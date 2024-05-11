@@ -4,7 +4,6 @@ import "./Signup.css";  // Assuming you're using the same CSS file for simplicit
 
 function Signup() {
   const [username, setUsername] = useState('');
-  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const navigate = useNavigate();
@@ -14,7 +13,7 @@ function Signup() {
     const response = await fetch('/users/signup', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ username, email, password })
+      body: JSON.stringify({ username, password })
     });
     if (response.ok) {
       navigate('/user-page');
@@ -37,13 +36,6 @@ function Signup() {
             placeholder="Username"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
-            required
-          />
-          <input
-            type="email"
-            placeholder="Email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
             required
           />
           <input

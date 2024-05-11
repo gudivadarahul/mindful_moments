@@ -10,7 +10,6 @@ router.post('/signup', async (req, res) => {
     const hashedPassword = await bcrypt.hash(req.body.password, 10);
     const newUser = new User({
       username: req.body.username,
-      email: req.body.email,
       password: hashedPassword
     });
     const savedUser = await newUser.save();
@@ -82,28 +81,6 @@ router.post('/update-password', async (req, res) => {
     res.send('Password updated successfully');
   } catch (error) {
     res.status(500).send('Failed to update password');
-  }
-});
-
-// Update email route
-router.post('/update-email', async (req, res) => {
-  if (!req.session.userId) {
-    return res.status(401).send('Unauthorized');
-  }
-  try {
-    const user = await User.findById(req.session.userId);
-    if (!user) {
-      return res.status(404).send('User not found');
-    }
-    const { newEmail } = req.body;
-    if (!newEmail) {
-      return res.status(400).send('No new email provided');
-    }
-    user.email = newEmail;
-    await user.save();
-    res.send('Email updated successfully');
-  } catch (error) {
-    res.status(500).send('Error updating email: ' + error.message);
   }
 });
 

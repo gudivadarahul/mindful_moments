@@ -6,9 +6,7 @@ import { nanoid } from "nanoid";
 function UserPage() {
   const [username, setUsername] = useState("");
   const [newPassword, setNewPassword] = useState("");
-  const [newEmail, setNewEmail] = useState("");
   const [showPasswordForm, setShowPasswordForm] = useState(false);
-  const [showEmailForm, setShowEmailForm] = useState(false);
   const [weeklyGoals, setWeeklyGoals] = useState([]);
   const [unsavedChanges, setUnsavedChanges] = useState(false);
   const navigate = useNavigate();
@@ -111,22 +109,6 @@ function UserPage() {
     }
   };
 
-  const handleUpdateEmail = async (e) => {
-    e.preventDefault();
-    try {
-      const response = await fetch("/users/update-email", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ newEmail }),
-      });
-      if (!response.ok) throw new Error("Failed to update email");
-      alert("Email updated successfully");
-      setShowEmailForm(false);
-    } catch (error) {
-      alert(error.message);
-    }
-  };
-
   return (
     <div className="user-page-container">
       <h1>Welcome {username}</h1>
@@ -166,16 +148,6 @@ function UserPage() {
             <input type="password" value={newPassword} onChange={(e) => setNewPassword(e.target.value)} className="input-field" />
           </label>
           <button type="submit" className="submit-button">Update Password</button>
-        </form>
-      )}
-      <button onClick={() => setShowEmailForm(!showEmailForm)} className="change-email-button">Change Email</button>
-      {showEmailForm && (
-        <form onSubmit={handleUpdateEmail} className="form-container">
-          <label className="form-label">
-            New Email:
-            <input type="email" value={newEmail} onChange={(e) => setNewEmail(e.target.value)} className="input-field" />
-          </label>
-          <button type="submit" className="submit-button">Update Email</button>
         </form>
       )}
     </div>
