@@ -38,8 +38,9 @@ function Home() {
           <div className="header-content">
             <h2>Welcome to Your Personal Growth Path</h2>
             <p>
-              Discover mindfulness and self-improvement with Kaizen Journal,
-              your daily companion for personal growth.
+              Discover mindfulness and self-improvement with your digital kaizen journal.
+              <br />
+              Your daily companion for personal growth.
             </p>
             <Link to="/signup" className="signup-button">
               Get Started
