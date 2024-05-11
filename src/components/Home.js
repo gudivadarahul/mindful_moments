@@ -20,18 +20,20 @@ function Home() {
 
   return (
     <div className="home-container">
+      <nav className="home-nav">
+        <Link to="/" className="brand-name">
+          Mindful Moments
+        </Link>
+        <div className="nav-links">
+          <Link to="/login" className="nav-link">
+            Login
+          </Link>
+          <Link to="/signup" className="nav-link">
+            Sign Up
+          </Link>
+        </div>
+      </nav>
       <div className="main-content">
-        <nav className="home-nav">
-          <h1>Mindful Moments</h1>
-          <div>
-            <Link to="/login" className="nav-link">
-              Login
-            </Link>
-            <Link to="/signup" className="nav-link signup">
-              Sign Up
-            </Link>
-          </div>
-        </nav>
         <header className="home-header">
           <div className="header-content">
             <h2>Welcome to Your Personal Growth Path</h2>

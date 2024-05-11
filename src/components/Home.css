@@ -9,8 +9,6 @@ body {
   color: #333;
   background-color: #f4f4f9;
   font-family: 'Merriweather', serif; 
-  margin: 0;
-  padding: 0;
 }
 
 .home-container {
@@ -19,30 +17,36 @@ body {
   min-height: 100vh; 
 }
 
-.main-content {
-  flex-grow: 1; 
-}
-
 /* Navigation styles */
 .home-nav {
+  width: 100%;
+  padding: 8px 16px;
   background-color: #fff;
-  padding: 20px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  position: fixed;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
-.home-nav h1 {
-  font-family: 'Roboto', sans-serif; 
-  color: #5C7AEA; 
+.brand-name {
+  text-decoration: none;
+  color: #5C7AEA;
+  font-weight: bold;
+  padding: 8px 16px;
+}
+
+/* Styling for the main content area */
+.main-content {
+  flex-grow: 1;
+  padding-top: 60px;  /* Space for fixed navbar */
 }
 
 .nav-link, .signup-button {
   text-decoration: none;
   color: #fff; 
   background-color: #4A61D1; 
-  padding: 10px 20px;
+  padding: 8px 16px; 
   border-radius: 5px;
   display: inline-block;
   transition: all 0.3s ease;
@@ -58,9 +62,20 @@ body {
   outline: none; 
 }
 
+/* Home-specific Styles */
+.home-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.main-content {
+  flex-grow: 1;
+}
+
 .home-header {
   text-align: center;
-  padding: 20px 20px;
+  padding: 20px;
   background-color: #EAEFF7; 
   color: #333; 
 }
@@ -84,6 +99,15 @@ body {
   padding: 20px;
 }
 
+.feature {
+  flex: 1;
+  padding: 1rem;
+  margin: 0 1rem;
+  background: #fff;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  border-radius: 10px;
+}
+
 .feature h3 {
   font-family: 'Roboto', sans-serif;
   color: #4A61D1;
@@ -97,15 +121,6 @@ body {
 .feature img {
   width: 100px; 
   height: auto;
-}
-
-.features .feature {
-  flex: 1;
-  padding: 1rem;
-  margin: 0 1rem;
-  background: #fff;
-  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-  border-radius: 10px;
 }
 
 .interaction-section {
@@ -128,15 +143,11 @@ body {
   text-align: center;
 }
 
-.newsletter-signup h3, .newsletter-signup p {
-  margin-bottom: 15px;
-}
-
 .feedback-form h3, .feedback-form textarea {
   margin-bottom: 15px;
 }
 
-.feedback-form form, .newsletter-signup form {
+.feedback-form form {
   display: flex;
   flex-direction: column;
 }
@@ -170,6 +181,7 @@ button:hover, button:focus {
 /* Footer styles */
 .home-footer {
   text-align: center;
+  font-weight: bold;
   padding: 1rem;
   background-color: #fff;
   color: #4A61D1; /* Soft blue for a consistent theme */
