@@ -117,6 +117,7 @@ body {
 .feature p {
   font-family: 'Merriweather', serif;
   color: #626262;
+  font-size: 14px;
 }
 
 .feature img {
@@ -142,6 +143,10 @@ body {
   border-radius: 10px;
   box-shadow: 0 2px 5px rgba(0,0,0,0.1);
   text-align: center;
+}
+
+.newsletter-signup p {
+  font-size: 14px;
 }
 
 .feedback-form h3, .feedback-form textarea {
