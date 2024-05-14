@@ -51,7 +51,10 @@ function UserPage() {
       if (!response.ok) throw new Error("Failed to fetch goals");
       const data = await response.json();
       if (data.goals && data.goals.length > 0) {
-        const goalsWithIds = data.goals.map((goal) => ({ ...goal, id: nanoid() }));
+        const goalsWithIds = data.goals.map((goal) => ({
+          ...goal,
+          id: nanoid(),
+        }));
         setWeeklyGoals(goalsWithIds);
       } else {
         const defaultGoals = [
@@ -137,7 +140,37 @@ function UserPage() {
       </nav>
       <div className="user-info">
         <span className="welcome-message">Welcome, {username}</span>
-        <Quote /> 
+        <Quote />
+      </div>
+      <div className="journal-layout">
+        <div className="section priorities-section">
+          <h2>Priorities</h2>
+          <div className="priorities">
+            <div className="priority">Spiritual Win</div>
+            <div className="priority">Mental Win</div>
+            <div className="priority">Physical Win</div>
+          </div>
+        </div>
+        <div className="section checklist-section">
+          <h2>Today's Checklist</h2>
+          <div className="checklist">
+            <input type="checkbox" />
+            <input type="checkbox" />
+            <input type="checkbox" />
+            <input type="checkbox" />
+          </div>
+        </div>
+        <div className="section gratitude-section">
+          <h2>I am grateful for...</h2>
+          <div className="gratitude">
+            <input type="text" placeholder="1." />
+            <input type="text" placeholder="2." />
+          </div>
+        </div>
+        <div className="section reflection-section">
+          <h2>Daily Reflection</h2>
+          <textarea placeholder="Write your reflection here..."></textarea>
+        </div>
       </div>
       <div className="main-content">
         <div className="goals-container">
@@ -199,7 +232,7 @@ function UserPage() {
         )}
       </div>
       <footer className="user-footer">
-        <p>© 2024 Rahul Gudivada. All rights reserved.</p>
+        <p>© 2024 Mindful Moments. All rights reserved.</p>
       </footer>
     </div>
   );

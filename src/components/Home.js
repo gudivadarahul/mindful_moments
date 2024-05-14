@@ -101,7 +101,7 @@ function Home() {
         </section>
       </div>
       <footer className="home-footer">
-        <p>© 2024 Rahul Gudivada. All rights reserved.</p>
+        <p>© 2024 Mindful Moments. All rights reserved.</p>
       </footer>
     </div>
   );

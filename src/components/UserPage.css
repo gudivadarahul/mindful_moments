@@ -173,13 +173,68 @@ body {
   border-radius: 4px;
 }
 
+/* Journal Layout Styles */
+.journal-layout {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.section {
+  background-color: #fff;
+  border: 1px solid #ddd;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.priorities-section h2, .checklist-section h2, .gratitude-section h2, .reflection-section h2 {
+  font-family: 'Roboto', sans-serif;
+  color: #4A61D1;
+  margin-bottom: 10px;
+}
+
+.priorities {
+  display: flex;
+  justify-content: space-between;
+}
+
+.priority {
+  flex: 1;
+  border: 1px solid #ddd;
+  padding: 10px;
+  text-align: center;
+}
+
+.checklist {
+  display: flex;
+  gap: 10px;
+}
+
+.gratitude input {
+  display: block;
+  width: 100%;
+  border: none;
+  border-bottom: 1px solid #ddd;
+  padding: 5px;
+  margin-bottom: 10px;
+}
+
+.reflection-section textarea {
+  width: 100%;
+  height: 100px;
+  border: 1px solid #ddd;
+  padding: 10px;
+  resize: none;
+}
+
 /* Footer Styles */
 .user-footer {
   text-align: center;
   font-weight: bold;
   padding: 1rem;
   background-color: #fff;
-  color: #4A61D1; /* Soft blue for a consistent theme */
+  color: #4A61D1; 
   box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
 }
 
