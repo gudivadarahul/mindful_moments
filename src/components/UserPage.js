@@ -1,14 +1,14 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./UserPage.css";
 import { nanoid } from "nanoid";
+import Quote from "./Quote";
 
 function UserPage() {
   const [username, setUsername] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [showPasswordForm, setShowPasswordForm] = useState(false);
   const [weeklyGoals, setWeeklyGoals] = useState([]);
-  const [unsavedChanges, setUnsavedChanges] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -70,7 +70,6 @@ function UserPage() {
     setWeeklyGoals((prevGoals) =>
       prevGoals.map((goal) => (goal.id === id ? { ...goal, text: text } : goal))
     );
-    setUnsavedChanges(true);
   };
 
   const toggleGoalCompletion = (id) => {
@@ -79,7 +78,6 @@ function UserPage() {
         goal.id === id ? { ...goal, completed: !goal.completed } : goal
       )
     );
-    setUnsavedChanges(true);
   };
 
   const handleLogout = async () => {
@@ -139,6 +137,7 @@ function UserPage() {
       </nav>
       <div className="user-info">
         <span className="welcome-message">Welcome, {username}</span>
+        <Quote /> 
       </div>
       <div className="main-content">
         <div className="goals-container">
